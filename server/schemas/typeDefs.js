@@ -6,8 +6,7 @@ const typeDefs = `
     title:String!
     authors:String
     image:String
-    link:String
-    
+    link:String    
   }
 
   type User {
