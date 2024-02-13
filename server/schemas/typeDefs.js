@@ -20,6 +20,8 @@ const typeDefs = `
   }
 
   type Query {
+    books:[Book]
+    users:[User]
     user:[username:String!]:User
   }
 
