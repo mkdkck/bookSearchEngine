@@ -1,20 +1,18 @@
 const typeDefs = `
-  type Book {
-    _id:ID!
-    bookId: ID!
+  type bookSchema{
+    authors:String!
     description:String!
+    bookId:ID!
     title:String!
-    authors:String
-    image:String
-    link:String    
   }
+
 
   type User {
     _id: ID!
     username: String!
     email: String!
     password: String!
-    savedBooks: [Book]
+    savedBooks: [bookSchema]
     bookCount:Int
   }
 
@@ -24,9 +22,8 @@ const typeDefs = `
   }
 
   type Query {
-    books:[Book]
-    users:[User]
-    user:[userId:ID,username:String]:User
+    users:[User]!
+    user(userId:ID,username:String):User
   }
 
   type Mutation {
