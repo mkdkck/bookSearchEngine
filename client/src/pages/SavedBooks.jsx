@@ -7,7 +7,8 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { getMe, deleteBook } from '../utils/API';
+import { useMutation } from '@apollo/client';
+import { REMOVE_BOOK } from '../utils/mutations'
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
@@ -26,7 +27,7 @@ const SavedBooks = () => {
           return false;
         }
 
-        const response = await getMe(token);
+        const response = await Auth.getProfile(token);
 
         if (!response.ok) {
           throw new Error('something went wrong!');
@@ -44,6 +45,8 @@ const SavedBooks = () => {
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
+    const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -51,7 +54,10 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook(bookId, token);
+      const user = await Auth.getProfile(token);
+
+      const response = await removeBook(user.user._id, bookId);
+      console.log(response, 'remove book response')
 
       if (!response.ok) {
         throw new Error('something went wrong!');

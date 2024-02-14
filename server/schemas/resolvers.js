@@ -57,7 +57,7 @@ const resolvers = {
             return { token, user };
         },
         removeBook: async (parent, { userId, bookId }) => {
-            return Thought.findOneAndUpdate(
+            return User.findOneAndUpdate(
                 { _id: userId },
                 { $pull: { savedBooks: { bookId } } },
                 { new: true }
