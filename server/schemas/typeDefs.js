@@ -24,6 +24,8 @@ const typeDefs = `
   type Query {
     users:[User]!
     user(userId:ID,username:String):User
+    me: User
+
   }
 
   type Mutation {

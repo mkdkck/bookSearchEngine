@@ -14,6 +14,12 @@ const resolvers = {
                 return "no user found"
             }
         },
+        me: async (parent, args, context) => {
+            if (context.user) {
+                return User.findOne({ _id: context.user._id }).populate('thoughts');
+            }
+            throw AuthenticationError;
+        },
     },
 
     Mutation: {
@@ -56,9 +62,9 @@ const resolvers = {
             // Return an `Auth` object that consists of the signed token and user's information
             return { token, user };
         },
-        removeBook: async (parent, { userId, bookId }) => {
+        removeBook: async (parent, { bookId }, context) => {
             return User.findOneAndUpdate(
-                { _id: userId },
+                { _id: context.user._id },
                 { $pull: { savedBooks: { bookId } } },
                 { new: true }
             );

@@ -8,8 +8,6 @@ export const QUERY_BOOKS = gql`
         description
         title
         authors
-        image
-        link
     }
   }
 `;
@@ -19,7 +17,13 @@ export const QUERY_USERS = gql`
     user{
         _id
         username
-        savedBooks
+        savedBooks{
+          _id
+          bookId
+          description
+          title
+          authors
+        }
         bookCount
     }
   }
@@ -30,11 +34,33 @@ export const QUERY_SINGLE_USER = gql`
     user(_id: $userId,username:$username) {
         _id
         username
-        savedBooks
+        savedBooks{
+          _id
+          bookId
+          description
+          title
+          authors
+        }
         bookCount
     }
   }
 `;
+
+export const QUERY_ME = gql`
+query me{
+  me{
+    _id
+    username
+    savedBooks{
+      _id
+      bookId
+      description
+      title
+      authors
+    }
+    bookCount
+}
+}`
 
 export const searchGoogleBooks = (query) => {
   return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
