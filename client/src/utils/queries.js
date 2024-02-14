@@ -26,8 +26,8 @@ export const QUERY_USERS = gql`
 `;
 
 export const QUERY_SINGLE_USER = gql`
-  query user($_id: String,$username:String) {
-    user(_id: $_id,username:$username) {
+  query user($userId: String,$username:String) {
+    user(_id: $userId,username:$username) {
         _id
         username
         savedBooks

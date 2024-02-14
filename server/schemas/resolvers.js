@@ -8,9 +8,9 @@ const resolvers = {
         users: async () => {
             return User.find().populate('savedBooks');
         },
-        user: async (parent, { _id, username }) => {
-            if (_id) {
-                return User.findOne({ _id: _id }).populate('savedBooks');
+        user: async (parent, { userId, username }) => {
+            if (userId) {
+                return User.findOne({ _id: userId }).populate('savedBooks');
             } else if (username) {
                 return User.findOne({ username: username }).populate('savedBooks');
             } else {
@@ -23,9 +23,9 @@ const resolvers = {
         addUser: async (parent, { username, email, password }) => {
             return User.creat({ username, email, password })
         },
-        updateBook: async (parent, { _id, bookId }) => {
+        addBook: async (parent, { userId, bookId }) => {
             return User.findOneAndUpdate(
-                { _id: _id },
+                { _id: userId },
                 {
                     $addToSet: { savedBooks: { bookId } },
                 },
@@ -59,9 +59,9 @@ const resolvers = {
             // Return an `Auth` object that consists of the signed token and user's information
             return { token, user };
         },
-        removeBook: async (parent, { _id, bookId }) => {
+        removeBook: async (parent, { userId, bookId }) => {
             return Thought.findOneAndUpdate(
-                { _id: _id },
+                { _id: userId },
                 { $pull: { savedBooks: { bookId } } },
                 { new: true }
             );
