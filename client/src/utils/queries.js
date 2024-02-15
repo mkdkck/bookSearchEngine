@@ -11,6 +11,7 @@ query me{
       description
       title
       authors
+      image
     }
     bookCount
 }
