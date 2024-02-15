@@ -36,18 +36,14 @@ https://pwa-text-editor-jvnq.onrender.com
 1. typing in the main page, data stored in the localstorage, when lose focus, data on the page saves to the IndexDB
 
 <img src="./assets/img/main.png" alt="Homepage" width= 60%> <br/>
-<img src="./assets/img/indexedDB.png" alt="data saving to the indexedDB" width= 60%> <br/>
 
 2. using manifest and service worker on this app
 
 <img src="./assets/img/Manifest.png" alt="using Manifest" width= 60%> <br/>
-<img src="./assets/img/sw.png" alt="using service worker" width= 60%> <br/>
-<img src="./assets/img/installApp.png" alt="installing app" width= 60%> <br/>
 
 3. main data is cached, app can run without internet.
 
 <img src="./assets/img/cached.png" alt="cached data" width= 60%> <br/>
-<img src="./assets/img/localApp.png" alt="running locally" width= 60%> <br/>
 
 ## License
 
