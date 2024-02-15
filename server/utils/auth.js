@@ -21,7 +21,6 @@ module.exports = {
     if (req.headers.authorization) {
       token = token.split(' ').pop().trim();
     }
-    console.log(token, "authMiddlewaretoken")
 
     if (!token) {
       return req;
@@ -34,8 +33,6 @@ module.exports = {
     } catch {
       console.log('Invalid token');
     }
-    console.log(req.user, "req.user")
-
 
     // send to next endpoint
     return req;

@@ -11,26 +11,24 @@ import { useMutation, useQuery } from '@apollo/client';
 import { REMOVE_BOOK } from '../utils/mutations'
 import { QUERY_ME } from '../utils/queries'
 
-import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  const [userData, setUserData] = useState({});
   const { loading, data } = useQuery(QUERY_ME);
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
-  // use this to determine if `useEffect()` hook needs to run again
+  const [removeBook, { error }] = useMutation(REMOVE_BOOK, {
+    refetchQueries: [
+      QUERY_ME]
+  });
 
   const meData = data?.me || [];
-  setUserData(meData)
-
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
 
     try {
-      const response = await removeBook(userData._id, bookId);
-
-      setUserData(updatedUser);
+      const { data } = await removeBook({
+        variables: { bookId },
+      });
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
@@ -52,12 +50,12 @@ const SavedBooks = () => {
       </div>
       <Container>
         <h2 className='pt-5'>
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
+          {meData.savedBooks.length
+            ? `Viewing ${meData.savedBooks.length} saved ${meData.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You have no saved books!'}
         </h2>
         <Row>
-          {userData.savedBooks.map((book) => {
+          {meData.savedBooks.map((book) => {
             return (
               <Col md="4">
                 <Card key={book.bookId} border='dark'>

@@ -38,7 +38,7 @@ const typeDefs = `
       description:String!    
       image:String
       title:String!):User
-    removeBook(userId:ID!,bookId:ID!): User
+    removeBook(bookId:ID!): User
   }
 `;
 
