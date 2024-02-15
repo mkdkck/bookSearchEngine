@@ -33,17 +33,20 @@ https://pwa-text-editor-jvnq.onrender.com
 
 ## Usage
 
-1. typing in the main page, data stored in the localstorage, when lose focus, data on the page saves to the IndexDB
+1. open the link to see a page that you can search for books
 
-<img src="./assets/img/main.png" alt="Homepage" width= 60%> <br/>
+<img src="./assets/img/bookSearch.png" alt="Book Search" width= 60%> <br/>
 
-2. using manifest and service worker on this app
+2. you can login to save books and display your saved books on your personal page
 
-<img src="./assets/img/Manifest.png" alt="using Manifest" width= 60%> <br/>
+<img src="./assets/img/loginSignUp.png" alt="login signup" width= 60%> <br/>
+<img src="./assets/img/savingFavBooks.png" alt="savingBooks" width= 60%> <br/>
 
-3. main data is cached, app can run without internet.
 
-<img src="./assets/img/cached.png" alt="cached data" width= 60%> <br/>
+3. you have a personal page, you can delete the books you saved
+
+<img src="./assets/img/personalPage.png" alt="personal page" width= 60%> <br/>
+<img src="./assets/img/Delete.png" alt="delete saved books" width= 60%> <br/>
 
 ## License
 
