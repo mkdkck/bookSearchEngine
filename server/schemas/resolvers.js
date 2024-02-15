@@ -1,22 +1,11 @@
 const { User } = require('../models');
+const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        users: async () => {
-            return User.find().populate('savedBooks');
-        },
-        user: async (parent, { userId, username }) => {
-            if (userId) {
-                return User.findOne({ _id: userId }).populate('savedBooks');
-            } else if (username) {
-                return User.findOne({ username: username }).populate('savedBooks');
-            } else {
-                return "no user found"
-            }
-        },
         me: async (parent, args, context) => {
             if (context.user) {
-                return User.findOne({ _id: context.user._id }).populate('thoughts');
+                return User.findOne({ _id: context.user._id });
             }
             throw AuthenticationError;
         },
@@ -24,19 +13,24 @@ const resolvers = {
 
     Mutation: {
         addUser: async (parent, { username, email, password }) => {
-            return User.creat({ username, email, password })
+            const user = await User.create({ username, email, password });
+            const token = signToken(user);
+            return { token, user };
         },
-        addBook: async (parent, { userId, bookId }) => {
-            return User.findOneAndUpdate(
-                { _id: userId },
-                {
-                    $addToSet: { savedBooks: { bookId } },
-                },
-                {
-                    new: true,
-                    runValidators: true,
-                }
-            );
+        addBook: async (parent, args, context) => {
+            if (context.user) {
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    {
+                        $addToSet: { savedBooks: { ...args } },
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
+                    }
+                );
+            }
+            throw AuthenticationError;
         },
 
         login: async (parent, { email, password }) => {

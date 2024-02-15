@@ -1,18 +1,19 @@
 const typeDefs = `
   type bookSchema{
-    authors:String!
-    description:String!
+    _id:ID
+    authors:[String]
+    description:String
     bookId:ID!
-    title:String!
+    title:String
+    image:String
   }
 
-
   type User {
-    _id: ID!
-    username: String!
-    email: String!
-    password: String!
-    savedBooks: [bookSchema]
+    _id: ID
+    username: String
+    email: String
+    password: String
+    savedBooks: [bookSchema]!
     bookCount:Int
   }
 
@@ -31,7 +32,12 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addBook (userId:ID!,bookId:ID!):User
+    addBook (
+      authors:[String]
+      bookId:ID!
+      description:String!    
+      image:String
+      title:String!):User
     removeBook(userId:ID!,bookId:ID!): User
   }
 `;

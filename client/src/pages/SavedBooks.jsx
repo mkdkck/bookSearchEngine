@@ -7,8 +7,10 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { REMOVE_BOOK } from '../utils/mutations'
+import { QUERY_ME } from '../utils/queries'
+
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
@@ -17,6 +19,7 @@ const SavedBooks = () => {
 
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
+  const [loading, data] = useQuery(QUERY_ME)
 
   useEffect(() => {
     const getUserData = async () => {
@@ -27,14 +30,9 @@ const SavedBooks = () => {
           return false;
         }
 
-        const response = await Auth.getProfile(token);
+        console.log(data, 'querydata')
 
-        if (!response.ok) {
-          throw new Error('something went wrong!');
-        }
-
-        const user = await response.json();
-        setUserData(user);
+        setUserData(userData);
       } catch (err) {
         console.error(err);
       }
