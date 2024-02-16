@@ -35,7 +35,7 @@ const typeDefs = `
     addBook (
       authors:[String]
       bookId:ID!
-      description:String!    
+      description:String    
       image:String
       title:String!):User
     removeBook(bookId:ID!): User
